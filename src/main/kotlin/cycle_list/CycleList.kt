@@ -3,11 +3,15 @@ import comparator.Comparator
 import types.users.UserType
 import java.io.*
 
-class CycleList(comparator: Comparator): Serializable {
+class CycleList: Serializable {
     private var head: Node? = null
     private var length = 0
 
-    private val comparator: Comparator? = null
+    private var comparator: Comparator? = null
+
+    constructor(comparator: Comparator){
+        this.comparator = comparator
+    }
 
     class Node(var data: Any?) : Serializable {
         var next: Node? = null
@@ -153,12 +157,12 @@ class CycleList(comparator: Comparator): Serializable {
     }
 
     private fun merge(
-        firstNode: Node,
-        secondNode: Node,
+        _firstNode: Node,
+        _secondNode: Node,
         comparator: Comparator
     ): Node? {
-        var firstNode: Node = firstNode
-        var secondNode: Node = secondNode
+        var firstNode: Node? = _firstNode
+        var secondNode: Node? = _secondNode
         val merged: Node = Node(null)
         var temp: Node = merged
         var tail: Node? = head!!.prev
@@ -166,24 +170,24 @@ class CycleList(comparator: Comparator): Serializable {
             if (comparator.compare(firstNode.data!!, secondNode.data!!) < 0) {
                 temp.next = firstNode
                 firstNode.prev = temp
-                firstNode = firstNode.next!!
+                firstNode = firstNode.next
             } else {
                 temp.next = secondNode
                 secondNode.prev = temp
-                secondNode = secondNode.next!!
+                secondNode = secondNode.next
             }
             temp = temp.next!!
         }
         while (firstNode != null) {
             temp.next = firstNode
             firstNode.prev = temp
-            firstNode = firstNode.next!!
+            firstNode = firstNode.next
             temp = temp.next!!
         }
         while (secondNode != null) {
             temp.next = secondNode
             secondNode.prev = temp
-            secondNode = secondNode.next!!
+            secondNode = secondNode.next
             temp = temp.next!!
             tail = temp
         }
