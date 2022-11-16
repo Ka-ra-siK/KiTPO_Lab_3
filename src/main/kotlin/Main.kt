@@ -1,4 +1,7 @@
+import testing.Testing
+
 fun main(args: Array<String>) {
-    println("Hello World!")
-    println("Program arguments: ${args.joinToString()}")
+    val test = Testing()
+    test.testFloatType()
+    test.testPointType()
 }

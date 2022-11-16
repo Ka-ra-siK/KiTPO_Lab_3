@@ -1,9 +1,13 @@
 package types
 
-class PointType(x: Double, y: Double) {
+class PointType {
     private var x = 0.0
     private var y = 0.0
 
+    constructor(x: Double, y: Double){
+        this.x = x
+        this.y = y
+    }
     fun setX(x: Double) {
         this.x = x
     }

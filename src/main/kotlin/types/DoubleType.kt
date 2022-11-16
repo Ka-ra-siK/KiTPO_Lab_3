@@ -1,8 +1,11 @@
 package types
 
-class DoubleType(doubleTypeValue: Double)  {
+class DoubleType {
     private var doubleTypeValue = 0.0
 
+    constructor(doubleTypeValue: Double){
+        this.doubleTypeValue = doubleTypeValue
+    }
     fun getDoubleTypeValue(): Double {
         return doubleTypeValue
     }
