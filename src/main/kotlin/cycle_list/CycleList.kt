@@ -126,11 +126,11 @@ class CycleList(comparator: Comparator): Serializable {
      * @see CycleList.getMidNode
      */
     fun sort(comparator: Comparator) {
-        if (head != null && head!!.next !== head && head!!.prev !== head) {
+        if (head != null && head!!.next != head && head!!.prev != head) {
             var tail: Node? = head!!.prev
-            tail?.next = null
+            tail!!.next = null
             head!!.prev = null
-            head = mergeSort(head!!, comparator)
+            head = mergeSort(head, comparator)
             tail = getNode(length - 1)
             tail.next = head
             head!!.prev = tail
@@ -141,19 +141,22 @@ class CycleList(comparator: Comparator): Serializable {
         if (headNode == null || headNode.next == null) {
             return headNode!!
         }
-        val middle: Node = getMidNode(headNode)
-        val middleNext: Node? = middle.next
+        val middle: Node = getMidNode(headNode)!!
+        val middleNext: Node = middle.next!!
+
         middle.next = null
+
         val left: Node = mergeSort(headNode, comparator)
         val right: Node = mergeSort(middleNext, comparator)
-        return merge(left, right, comparator)
+
+        return merge(left, right, comparator)!!
     }
 
     private fun merge(
         firstNode: Node,
         secondNode: Node,
         comparator: Comparator
-    ): Node {
+    ): Node? {
         var firstNode: Node = firstNode
         var secondNode: Node = secondNode
         val merged: Node = Node(null)
@@ -184,10 +187,10 @@ class CycleList(comparator: Comparator): Serializable {
             temp = temp.next!!
             tail = temp
         }
-        return merged.next!!
+        return merged.next
     }
 
-    private fun getMidNode(node: Node): Node {
+    private fun getMidNode(node: Node): Node? {
         var previousNode: Node = node
         var currentNode: Node = node
         while (currentNode.next != null && currentNode.next!!.next != null) {
@@ -208,13 +211,11 @@ class CycleList(comparator: Comparator): Serializable {
 
     override fun toString(): String {
         var str = ""
-        var tmp: Node? = head
+        var tmp: Node = head!!
         for (i in 0 until length) {
-            str = """
-            $str${tmp?.data}
-            
-            """.trimIndent()
-            tmp = tmp?.next
+            str += tmp.data
+            str += "\n"
+            tmp = tmp.next!!
         }
         return str
     }
